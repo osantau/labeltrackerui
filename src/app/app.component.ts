@@ -11,7 +11,7 @@ import { Lot } from './lot';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  myWebSocket: WebSocketSubject = webSocket(environment.wsUrl);
+  myWebSocket: WebSocketSubject<any> = webSocket(environment.wsUrl);
   currentLot: Lot;
   total = 0;
   repeats = 0;
@@ -19,9 +19,6 @@ export class AppComponent implements OnInit {
   viables = 0;
 
   constructor(private apiService: ApiService) {
-    apiService.getCurrentLot().subscribe((data)=>{
-      this.currentLot = data;
-    });
 
     this.myWebSocket.asObservable().subscribe((data)=>{
       if (data.lot && data.label) {
@@ -31,5 +28,10 @@ export class AppComponent implements OnInit {
     })
   }
   ngOnInit(): void {
+    this.apiService.getCurrentLot().subscribe((data)=>{
+      this.currentLot = data;
+    }, error => {
+      console.log(error);
+    });
   }
 }
