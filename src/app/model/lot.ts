@@ -1,11 +1,11 @@
-  export interface Attributes {
+  export  class Attributes {
       total: number;
       errors: number;
       repeats: number;
       viables: number;
   }
 
-  export interface Lot {
+  export class Lot {
       id: number;
       attributes: Attributes;
       lotno: string;

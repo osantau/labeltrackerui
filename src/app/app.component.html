@@ -1,11 +1,11 @@
 <div class="layoutSidenav_content">
 <main>
      <div class="container-fluid">
-        <h1 class="breadcrumb mt-4">Lot curent: {{currentLot.lotno}}</h1>
+        <h1 class="breadcrumb mt-4">Lot curent: {{currentLot?.lotno}}</h1>
         <div class="row">
           <div class="col-xl-3 col-md-3">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-header"><h2><i class="fa fa-database"></i> {{currentLot.attributes.total}}</h2></div>
+                                    <div class="card-header"><h2><i class="fa fa-database"></i> {{currentLot?.attributes.total}}</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <span class="small text-white stretched-link">Etichete lot curent !</span>
                                     </div>
@@ -13,7 +13,7 @@
                             </div>
                             <div class="col-xl-3 col-md-3">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-header"><h2><i class="fa fa-warning"></i> {{currentLot.attributes.repeats}}</h2></div>
+                                    <div class="card-header"><h2><i class="fa fa-warning"></i> {{currentLot?.attributes.repeats}}</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <span class="small text-white stretched-link">Repetari lot curent !</span>
                                     </div>
@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-xl-3 col-md-3">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-header"><h2><i class="fa fa-thumbs-up"></i> {{currentLot.attributes.viables}}</h2></div>
+                                    <div class="card-header"><h2><i class="fa fa-thumbs-up"></i> {{currentLot?.attributes.viables}}</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <span class="small text-white stretched-link">OK lot curent!</span>
                                     </div>
@@ -29,7 +29,7 @@
                             </div>
                              <div class="col-xl-3 col-md-3">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-header"><h2><i class="fa fa-bolt"></i> {{currentLot.attributes.errors}}</h2></div>
+                                    <div class="card-header"><h2><i class="fa fa-bolt"></i> {{currentLot?.attributes.errors}}</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <span class="small text-white stretched-link">Erori lot curent !</span>
                                     </div>
@@ -53,7 +53,26 @@
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     Etichete</div>
                                     <div class="card-body">
-                                        <h2>Tabel</h2>
+                                       <div class="table-responsive">
+                                              <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                                              <thead>
+                                                    <tr>
+                                                      <th>Eticheta</th>
+                                                      <th>Data</th>
+                                                      <th>Se repeta</th>
+                                                      <th>Eroare</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                          <tr *ngFor="let lbl of labels">
+                                                          <td>{{lbl.label}}</td>
+                                                          <td>{{lbl.created }}</td>
+                                                          <td>{{lbl.repeated}}</td>
+                                                          <td>{{lbl.error}}</td>
+                                                          </tr>
+                                                  </tbody>
+                                              </table>
+                                       </div>
                                     </div>
                                 </div>
                             </div>
