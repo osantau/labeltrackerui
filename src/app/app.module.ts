@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DataTablesModule } from 'angular-datatables';
+import { NotifierModule }  from 'angular-notifier';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +16,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    NotifierModule
   ],
   providers: [],
   bootstrap: [AppComponent]
