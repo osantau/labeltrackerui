@@ -43,7 +43,19 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Adaugare Lot</div>
                                     <div class="card-body">
-                                        <h2>Formular Adaugare</h2>
+                                          <form [formGroup]="angForm" novalidate  (ngSubmit)="onSubmit()">
+                                          <div class="form-group">
+                                            <label for="addLabel">Numar de lot</label>
+                                            <input type="text" class="form-control" id="addLabel" formControlName="name" aria-describedby="addLabelHelp" placeholder="Introduceti un nr de lot">
+                                            <small id="addLabelHelp" class="form-text text-muted">Acest lot va deveni lotul curent !</small>
+                                          </div>
+                                          <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
+                                            <div *ngIf="angForm.controls['name'].errors.required">
+                                             Numarul de lot este obligatoriu !
+                                            </div>
+                                        </div>
+                                          <button type="submit" class="btn btn-success" [disabled]="angForm.pristine || angForm.invalid">Adauga</button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -87,7 +99,24 @@
                                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                                     Istoric</div>
                                     <div class="card-body">
-
+                                        <div class="table-responsive">
+                                              <table datatable  [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2" class="row-border hover">
+                                              <thead>
+                                                    <tr>
+                                                      <th>Lot</th>
+                                                      <th>Perioada</th>
+                                                      <th></th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                          <tr *ngFor="let oldLot of oldLots">
+                                                          <td>{{oldLot.lotno}}</td>
+                                                          <td>{{oldLot.started | date: 'dd.MM.yyyy' }} - {{oldLot.created | date: 'dd.MM.yyyy'}}</td>
+                                                          <td>D</td>
+                                                          </tr>
+                                                  </tbody>
+                                              </table>
+                                       </div>
                                     </div>
                                 </div>
                             </div>

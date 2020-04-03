@@ -6,7 +6,7 @@ import { Lot } from './model/lot';
 import { Label } from './model/label';
 import { Subject } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
   notifier: NotifierService;
+  angForm: FormGroup;
+  oldLots: Lot[] = [];
+  dtOptions2: any = {};
+  dtTrigger2: Subject<any> = new Subject();
 
-  constructor(private apiService: ApiService, private notifierService: NotifierService) {
+  constructor(private apiService: ApiService, private notifierService: NotifierService, private fb: FormBuilder) {
 
     this.notifier = notifierService;
     this.apiService.getCurrentLot().subscribe((data) => {
@@ -58,12 +62,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.angForm = this.fb.group({
+      name: ['', Validators.required ]
+   });
 
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       dom: 'Bfrtip',
-      order: [[1,'desc']],
+       order: [[1,'desc']],
       buttons: [
          'excel',
          'csv',
@@ -76,10 +83,32 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dtTrigger.next();
     });
 
+    this.dtOptions2 = {
+        'scrollY':        '250px',
+        'scrollCollapse': true,
+        'paging':         false
+
+    };
+
+
+   this.apiService.getClosedLots().subscribe((data)=>{
+      this.oldLots = data;
+    this.dtTrigger2.next();
+   });
   }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  onSubmit() {
+    if (this.angForm.valid) {
+      this.apiService.addLot(this.angForm.value.name).subscribe((val) =>{
+        this.currentLot = val;
+        this.labels = [];
+      });
+      this.angForm.reset();
+    }
   }
 }
