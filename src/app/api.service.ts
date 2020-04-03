@@ -34,4 +34,8 @@ export class ApiService {
   getClosedLots(): Observable<Lot[]> {
     return this.http.get<Lot[]>(environment.baseUrl + '/lots/all');
   }
+
+  getLabelsByLot(pLotId: number): Observable<Label[]> {
+    return this.http.get<Label[]>(environment.baseUrl+'/labels/bylot?lotId=' + pLotId);
+  }
 }

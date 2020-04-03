@@ -105,14 +105,13 @@
                                                     <tr>
                                                       <th>Lot</th>
                                                       <th>Perioada</th>
-                                                      <th></th>
                                                     </tr>
                                                   </thead>
                                                   <tbody>
                                                           <tr *ngFor="let oldLot of oldLots">
                                                           <td>{{oldLot.lotno}}</td>
-                                                          <td>{{oldLot.started | date: 'dd.MM.yyyy' }} - {{oldLot.created | date: 'dd.MM.yyyy'}}</td>
-                                                          <td>D</td>
+                                                          <td>{{oldLot.started | date: 'dd.MM.yyyy' }} - {{oldLot.created | date: 'dd.MM.yyyy'}}
+                                                          <button (click)="onLotDownload(oldLot.id)"><i class="fa fa-arrow-circle-down"></i></button></td>
                                                           </tr>
                                                   </tbody>
                                               </table>

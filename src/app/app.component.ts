@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
        order: [[1,'desc']],
       buttons: [
          'excel',
-         'csv',
+        //  'csv',
          'print'
       ]
     };
@@ -110,5 +110,10 @@ export class AppComponent implements OnInit, OnDestroy {
       });
       this.angForm.reset();
     }
+  }
+
+  onLotDownload(id) {
+
+    console.log(id);
   }
 }
