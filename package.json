@@ -26,6 +26,8 @@
     "datatables.net-buttons": "^1.6.1",
     "datatables.net-buttons-dt": "^1.6.1",
     "datatables.net-dt": "^1.10.20",
+    "exceljs": "^1.12.0",
+    "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "jszip": "^3.3.0",
