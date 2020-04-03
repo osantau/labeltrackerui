@@ -56,10 +56,10 @@ export class ApiService {
       ws.addRow([nrCrt, lbl.label, lbl.created, lbl.repeated, lbl.error])
       nrCrt++;
     });
-    workbook.xlsx.writeBuffer().then((buf)=>{
-      fs.saveAs( new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), lot.lotno + '.xlsx');
+    workbook.xlsx.writeBuffer().then((buf) => {
+      fs.saveAs(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), lot.lotno + '.xlsx');
     });
 
-
   }
+
 }

@@ -84,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.dtOptions2 = {
-      scrollY: '250px',
+      scrollY: '400px',
       scrollCollapse: true,
       paging: false
 
@@ -105,8 +105,12 @@ export class AppComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.angForm.valid) {
       this.apiService.addLot(this.angForm.value.name).subscribe((val) => {
-        this.currentLot = val;
-        this.labels = [];
+      this.currentLot = val;
+      this.labels = [];
+    this.apiService.getClosedLots().subscribe((data)=>{
+
+      this.oldLots = data;
+    });
       });
       this.angForm.reset();
     }
