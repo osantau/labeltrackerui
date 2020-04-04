@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
             val.error = tmp.error;
           }
         });
-        this.labels.push(tmp);
+        this.labels.unshift(tmp);
 
         if (tmp.repeated === 'Y' && tmp.error === 'N') {
           this.notifier.notify('warning', tmp.label + ' se repeta !');
