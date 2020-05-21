@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from '../environments/environment';
 import { ApiService } from '../app/api.service';
@@ -7,13 +7,14 @@ import { Label } from './model/label';
 import { Subject } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {DataTableDirective} from 'angular-datatables';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   myWebSocket: WebSocketSubject<any> = webSocket(environment.wsUrl);
   currentLot: Lot;
   newLabel: Label;
@@ -25,6 +26,9 @@ export class AppComponent implements OnInit, OnDestroy {
   oldLots: Lot[] = [];
   dtOptions2: any = {};
   dtTrigger2: Subject<any> = new Subject();
+
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
 
   constructor(private apiService: ApiService, private notifierService: NotifierService, private fb: FormBuilder) {
 
@@ -48,8 +52,6 @@ export class AppComponent implements OnInit, OnDestroy {
             val.error = tmp.error;
           }
         });
-        this.labels.unshift(tmp);
-
         if (tmp.repeated === 'Y' && tmp.error === 'N') {
           this.notifier.notify('warning', tmp.label + ' se repeta !');
         } else if (tmp.error === 'Y') {
@@ -57,6 +59,14 @@ export class AppComponent implements OnInit, OnDestroy {
         } else if (tmp.repeated === 'N' && tmp.error === 'N') {
           this.notifier.notify('success', tmp.label + ' ok !');
         }
+        this.labels.push(tmp);
+
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          // Destroy the table first
+          dtInstance.destroy();
+          // Call the dtTrigger to rerender again
+          this.dtTrigger.next();
+        });
       }
     });
   }
@@ -100,6 +110,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+    this.dtTrigger2.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+
   }
 
   onSubmit() {
