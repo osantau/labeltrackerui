@@ -74,24 +74,7 @@
                                     Etichete</div>
                                     <div class="card-body">
                                        <div class="table-responsive">
-                                              <table datatable  id="DataTables_Table_0" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-                                              <thead>
-                                                    <tr>
-                                                      <th>Eticheta</th>
-                                                      <th>Data</th>
-                                                      <th>Se repeta</th>
-                                                      <th>Eroare</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                          <tr *ngFor="let lbl of labels">
-                                                          <td>{{lbl.label}}</td>
-                                                          <td>{{lbl.created }}</td>
-                                                          <td>{{lbl.repeated}}</td>
-                                                          <td>{{lbl.error}}</td>
-                                                          </tr>
-                                                  </tbody>
-                                              </table>
+                                              <table datatable  id="DataTables_Table_0" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
                                        </div>
                                     </div>
                                 </div>

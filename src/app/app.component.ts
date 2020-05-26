@@ -62,10 +62,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.labels.push(tmp);
 
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          // Destroy the table first
+          dtInstance.ajax.reload();
+        // dtInstance.unshift(tmp);
+          /* // Destroy the table first
           dtInstance.destroy();
           // Call the dtTrigger to rerender again
-          this.dtTrigger.next();
+          this.dtTrigger.next(); */
         });
       }
     });
@@ -77,6 +79,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.dtOptions = {
+      ajax: environment.baseUrl + '/labels/assoc',
       pagingType: 'full_numbers',
       pageLength: 10,
       dom: 'Bfrtip',
@@ -84,8 +87,21 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       buttons: [
         'excel',
         //  'csv',
-        'print'
-      ]
+        // 'print'
+      ],
+      columns: [{
+        title: 'Eticheta',
+        data: 'label'
+      }, {
+        title: 'Data',
+        data: 'created'
+      }, {
+        title: 'Se repeta',
+        data: 'repeated'
+      }, {
+        title: 'Eroare',
+        data: 'error'
+      }]
     };
 
     this.apiService.getCurrentLotLabels().subscribe((data) => {
