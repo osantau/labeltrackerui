@@ -8,6 +8,8 @@ import { Subject } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {DataTableDirective} from 'angular-datatables';
+import { Howl } from 'howler';
+import { HttpDownloadProgressEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +41,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log(error);
     });
 
+    let soundRepeat = new Howl({src:['/assets/audio/beep-02.mp3','/assets/audio/beep-02.wav']});
+    let soundError = new Howl({src:['/assets/audio/beep-03.mp3','/assets/audio/beep-03.wav']});
     this.myWebSocket.asObservable().subscribe((data) => {
       if (data.lot) {
         this.currentLot = data.lot[0];
@@ -54,8 +58,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         if (tmp.repeated === 'Y' && tmp.error === 'N') {
           this.notifier.notify('warning', tmp.label + ' se repeta !');
+          // soundRepeat.play();
         } else if (tmp.error === 'Y') {
           this.notifier.notify('error', 'A aparut o eroare !');
+          // soundError.play();
         } else if (tmp.repeated === 'N' && tmp.error === 'N') {
           this.notifier.notify('success', tmp.label + ' ok !');
         }
@@ -157,4 +163,5 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.apiService.downLoadLabelsforLot(id);
   }
+
 }
