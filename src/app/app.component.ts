@@ -58,10 +58,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         if (tmp.repeated === 'Y' && tmp.error === 'N') {
           this.notifier.notify('warning', tmp.label + ' se repeta !');
-          // soundRepeat.play();
+          soundRepeat.play();
         } else if (tmp.error === 'Y') {
           this.notifier.notify('error', 'A aparut o eroare !');
-          // soundError.play();
+          soundError.play();
         } else if (tmp.repeated === 'N' && tmp.error === 'N') {
           this.notifier.notify('success', tmp.label + ' ok !');
         }
