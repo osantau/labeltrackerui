@@ -135,7 +135,14 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    //Fix AudioContext initialization in chrome, safari, mobile browsers.
+    let elem = document.getElementById('cLot');
+    let evt = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+  });
+    elem.dispatchEvent(evt);
   }
 
   onSubmit() {
