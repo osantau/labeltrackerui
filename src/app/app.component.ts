@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from '../environments/environment';
 import { ApiService } from '../app/api.service';
@@ -69,11 +69,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.ajax.reload();
-        // dtInstance.unshift(tmp);
-          /* // Destroy the table first
-          dtInstance.destroy();
-          // Call the dtTrigger to rerender again
-          this.dtTrigger.next(); */
         });
       }
     });
@@ -91,9 +86,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       dom: 'Bfrtip',
       order: [[1, 'desc']],
       buttons: [
-        'excel',
+        {
+          extend: 'excel',
+          title: '',
+          filename: () =>{return this.currentLot.lotno;},
         //  'csv',
         // 'print'
+        }
       ],
       columns: [{
         title: 'Eticheta',
