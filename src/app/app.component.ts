@@ -82,9 +82,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dtOptions = {
       ajax: environment.baseUrl + '/labels/assoc',
       pagingType: 'full_numbers',
-      pageLength: 10,
+      pageLength: 20,
       dom: 'Bfrtip',
       order: [[1, 'desc']],
+      autoWidth: false,
       buttons: [
         {
           extend: 'excel',
@@ -96,16 +97,20 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       ],
       columns: [{
         title: 'Eticheta',
-        data: 'label'
+        data: 'label',
+        width: "35%"
       }, {
         title: 'Data',
-        data: 'created'
+        data: 'created',
+        width: "35%"
       }, {
         title: 'Se repeta',
-        data: 'repeated'
+        data: 'repeated',
+        width: "15%"
       }, {
         title: 'Eroare',
-        data: 'error'
+        data: 'error',
+        width: "15%"
       }]
     };
 
